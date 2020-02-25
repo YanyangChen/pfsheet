@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <cc:interface componentType="handsonTable">
+		<cc:attribute name="rows" />
+		<cc:attribute name="columns" required="true" />
+		<cc:attribute name="colHeaders" required="true" />
+		<cc:attribute name="rowHeaders" type="java.lang.Boolean" default="false" />
+		<cc:attribute name="width" type="java.lang.Integer" />
+		<cc:attribute name="height" type="java.lang.Integer" />
+		<cc:attribute name="stretchH" type="java.lang.String" default="all" />
+		<cc:attribute name="autoWrapRow" type="java.lang.Boolean" default="true" />
+		<cc:attribute name="columnSorting" type="java.lang.Boolean" default="true" />
+		<cc:attribute name="multiColumnSorting" type="java.lang.Boolean" default="false" />
+		<cc:attribute name="filters" type="java.lang.Boolean" default="true" />
+		<cc:attribute name="exportFile" type="java.lang.Boolean" default="false" />
+		<cc:attribute name="contextMenu" type="java.lang.Boolean" default="true" />
+		<cc:attribute name="dropdownMenu" type="java.lang.Boolean" default="true" />
+		<cc:attribute name="licenseKey" type="java.lang.String" default="non-commercial-and-evaluation" />
+    </cc:interface>
+
+    <cc:implementation>
+    
+    	<h:outputStylesheet name="handsonTable/custom.css" />
+		<h:outputStylesheet name="handsonTable/handsontable.full.min.css"/>  
+        <h:outputScript target="head" name="handsonTable/handsontable.full.min.js"/>   
+		
+		<div id="#{cc.clientId}" />
+		<h:inputHidden id="websamsTableData" value="#{cc.attrs.rows.dataInJson}" />
+		
+<!-- 		<div id="export-buttons">
+			<h:commandButton id="export-csv" value="Export to a .csv file" />
+		</div> -->
+		
+        <script type="text/javascript">
+        	var clientId = "${cc.clientId}".replace(/:/g, "\\:");
+        	var tableDiv = document.querySelector('#' + clientId);
+        	var inputHiddenDiv = document.querySelector('#' + clientId + "\\:websamsTableData");
+        	
+ 			var dataObject = JSON.parse('#{cc.attrs.rows.dataInJson}');
+        	var tableSettings = JSON.parse('#{cc.tableSettingsAsJson}');
+			
+        	addDataToTableSettings(dataObject);
+			removeRedudantSettings(tableSettings);        	
+        	
+			var hot = new Handsontable(tableDiv, tableSettings);
+
+			function addDataToTableSettings(dataObject) {
+	        	Object.assign(tableSettings, {
+	        		'data': dataObject,
+	        		'afterChange': (changes) => {
+	        			inputHiddenDiv.value = JSON.stringify(dataObject);
+					}
+	        	});
+			}
+			
+			function removeRedudantSettings(tableSettings) {
+				// `columnSorting` and `multiColumnSorting` should not be enabled simultaneously
+				if (tableSettings['multiColumnSorting']) {
+					delete tableSettings['columnSorting'];
+				}
+			}
+			
+/*			
+			function registerExportButton(enableFileExport) {
+				if (enableFileExport) {
+					var exportBtnId = "#${cc.clientId}:export-csv".replace(/:/g, "\\:");
+					var exportBtn = document.querySelector(exportBtnId);
+					
+					exportBtn.addEventListener("click", function(event) { 
+						hot.getPlugin("exportFile").downloadFile("csv", {filename: "Handsontable CSV Export example"});
+					});
+				}
+			}  */
+        </script>
+        
+    </cc:implementation>
+</html>
+
+

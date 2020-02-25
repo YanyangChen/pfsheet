@@ -1,0 +1,13 @@
+body {
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+	font-size: 13px;
+    font-weight: 400;
+    color: #363636;
+}   
+.sortAction {
+	text-decoration: underline;
+}
+.tableUpdateBtn {
+	color: #363636;
+    background: #eae9e9;
+}

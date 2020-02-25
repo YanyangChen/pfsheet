@@ -1,0 +1,248 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:websams="http://xmlns.jcp.org/jsf/composite/handsonTable"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions" xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    <!-- <h:outputScript library="js" name="nestload.js" target="head" />  -->
+        <title></title>
+    </h:head>
+    <h:body>
+        <h:form id="mainForm">
+            <!-- <p:importEnum type="websams.component.handsontable.model.AssetType" var="AssetType" />
+            <p:importEnum type="websams.component.handsontable.model.PlatformType" var="PlatformType" /> -->
+            <!-- <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{sheetController.assets}" var="row" height="400" rowKey="#{row.assetId}" resizableCols="true" resizableRows="true" filteredValue="#{sheetController.filteredAssets}" readOnly="false" rowStyleClass="#{row.purchasePrice gt 0 ? 'positive' : 'negative'}" selectionMode="multiple" multisortable="true">
+             -->
+             <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{sheetController.subjectslist}" var="row" height="400" rowKey="#{row.chin}" readOnly="false" >
+            
+                 <p:ajax event="change" listener="#{sheetController.subjectsChangeEvent}" />
+                 
+                
+                <pe:columnGroup>
+                	<pe:sheetRow>
+                		<pe:sheetcolumn readOnly="true" colSpan="5" headerText="main course" value="h1"/>
+		               
+		                
+                	</pe:sheetRow>
+                	
+                	<pe:sheetRow>
+                		<pe:sheetcolumn readOnly="true" headerText="Chinese" value="h2"/>
+		                <pe:sheetcolumn readOnly="true" headerText="English" />
+		                <pe:sheetcolumn readOnly="true" headerText="Gens" />
+		                <pe:sheetcolumn readOnly="true" headerText="Lile" />
+		                <pe:sheetcolumn readOnly="true" headerText="PE"/>
+		                
+                	</pe:sheetRow>
+                </pe:columnGroup>
+                <pe:sheetcolumn readOnly="true" value="#{row.chin}" colWidth="150" />
+		        <pe:sheetcolumn value="#{row.eng}" colWidth="100"  />
+		        <pe:sheetcolumn value="#{row.gens}" colWidth="100"  />
+		        <pe:sheetcolumn value="#{row.lile}" colWidth="100" />
+		         <pe:sheetcolumn value="#{row.pe}" colWidth="100"  /> <!-- colType="checkbox" --> 
+		       
+            </pe:sheet>
+            
+            <!--  	<p:commandLink id="pdf" ajax="false">
+	 		<h:outputLabel value="pdf" />
+	 		<pe:exporter type="pdf" target="sheet" fileName="MessagesAndDetails" datasetPadding="4" />  
+  
+        </p:commandLink> -->
+        
+        </h:form>
+        <p:commandButton action="#{sheetController.updateSubjects2DB}" id="iconOnly" title="Save Data" />
+        <h:form id="secForm">
+            <!-- <p:importEnum type="websams.component.handsontable.model.AssetType" var="AssetType" />
+            <p:importEnum type="websams.component.handsontable.model.PlatformType" var="PlatformType" /> -->
+            <!-- <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{sheetController.assets}" var="row" height="400" rowKey="#{row.assetId}" resizableCols="true" resizableRows="true" filteredValue="#{sheetController.filteredAssets}" readOnly="false" rowStyleClass="#{row.purchasePrice gt 0 ? 'positive' : 'negative'}" selectionMode="multiple" multisortable="true">
+             -->
+             <pe:sheet id="sheet2" widgetVar="sheetWidget2" value="#{sheetController.subjectslist}" var="row" height="400" width="400" fixedCols="3" rowKey="#{row.chin}" readOnly="false" >
+            
+                 <p:ajax event="change" listener="#{sheetController.subjectsChangeEvent}" />
+                 
+                
+                <pe:columnGroup>
+                	<pe:sheetRow>
+                		<pe:sheetcolumn readOnly="true" colSpan="5" headerText="main course" value="h1"/>
+		               
+		                
+                	</pe:sheetRow>
+                	
+                	<pe:sheetRow>
+                		<pe:sheetcolumn readOnly="true" headerText="Chinese" value="h2"/>
+		                <pe:sheetcolumn readOnly="true" headerText="English" />
+		                <pe:sheetcolumn readOnly="true" headerText="Gens" />
+		                <pe:sheetcolumn readOnly="true" headerText="Lile" />
+		                <pe:sheetcolumn readOnly="true" headerText="PE"/>
+		                
+                	</pe:sheetRow>
+                </pe:columnGroup>
+                <pe:sheetcolumn readOnly="true" value="#{row.chin}" colWidth="150" />
+		        <pe:sheetcolumn value="#{row.eng}" colWidth="100"  />
+		        <pe:sheetcolumn value="#{row.gens}" colWidth="100"  />
+		        <pe:sheetcolumn value="#{row.lile}" colWidth="100" />
+		         <pe:sheetcolumn value="#{row.pe}" colWidth="100"  /> <!-- colType="checkbox" --> 
+		       
+            </pe:sheet>
+            
+            <!--  	<p:commandLink id="pdf" ajax="false">
+	 		<h:outputLabel value="pdf" />
+	 		<pe:exporter type="pdf" target="sheet" fileName="MessagesAndDetails" datasetPadding="4" />  
+  
+        </p:commandLink> -->
+        
+        </h:form>
+        
+        
+        <h:form id="thirdForm">
+            <!-- <p:importEnum type="websams.component.handsontable.model.AssetType" var="AssetType" />
+            <p:importEnum type="websams.component.handsontable.model.PlatformType" var="PlatformType" /> -->
+            <!-- <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{sheetController.assets}" var="row" height="400" rowKey="#{row.assetId}" resizableCols="true" resizableRows="true" filteredValue="#{sheetController.filteredAssets}" readOnly="false" rowStyleClass="#{row.purchasePrice gt 0 ? 'positive' : 'negative'}" selectionMode="multiple" multisortable="true">
+             -->
+             <pe:sheet id="sheet3" widgetVar="sheetWidget3" value="#{sheetController.assets}" var="row" height="400" fixedRows="4" rowKey="#{row.assetId}" readOnly="false" >
+            
+                 <p:ajax event="change" listener="#{sheetController.assetChangeEvent}" />
+                 <f:facet name="header">
+                    <h:outputText value="Assets" />
+                </f:facet>
+                <f:facet name="footer">
+                    <h:outputText id="footer" value="#{sheetController.filteredAssets.size()} Records" />
+                </f:facet> 
+                <pe:columnGroup>
+                	<pe:sheetRow>
+                		<pe:sheetcolumn rowSpan="2" headerText="Unique Identifier" />
+		            	<pe:sheetcolumn colSpan="8" headerText="Specification" />     
+                	</pe:sheetRow>
+                	
+                	<pe:sheetRow>
+                		
+                		<pe:sheetcolumn headerText="" />
+		                <pe:sheetcolumn headerText="Type" filterBy="#{row.assetType}" />
+		                <pe:sheetcolumn headerText="Platform" />
+		                <pe:sheetcolumn headerText="Arch" />
+		                <pe:sheetcolumn headerText="Active"/>
+		                <pe:sheetcolumn headerText="Price" />
+		                <pe:sheetcolumn headerText="Password" />
+		                <pe:sheetcolumn headerText="Date" />
+		                <pe:sheetcolumn headerText="Time" />
+                	</pe:sheetRow>
+                	<pe:sheetRow>
+                		
+                		<pe:sheetcolumn headerText="1" />
+		                <pe:sheetcolumn headerText="Type1" filterBy="#{row.assetType}" />
+		                <pe:sheetcolumn headerText="Platform1" />
+		                <pe:sheetcolumn headerText="Arch1" />
+		                <pe:sheetcolumn headerText="Active1"/>
+		                <pe:sheetcolumn headerText="Price1" />
+		                <pe:sheetcolumn headerText="Password1" />
+		                <pe:sheetcolumn headerText="Date1" />
+		                <pe:sheetcolumn headerText="Time1" />
+                	</pe:sheetRow>
+                	<pe:sheetRow>
+                		
+                		<pe:sheetcolumn headerText="2" />
+		                <pe:sheetcolumn headerText="Type2" filterBy="#{row.assetType}" />
+		                <pe:sheetcolumn headerText="Platform2" />
+		                <pe:sheetcolumn headerText="Arch2" />
+		                <pe:sheetcolumn headerText="Active2"/>
+		                <pe:sheetcolumn headerText="Price2" />
+		                <pe:sheetcolumn headerText="Password2" />
+		                <pe:sheetcolumn headerText="Date2" />
+		                <pe:sheetcolumn headerText="Time2" />
+                	</pe:sheetRow>
+                </pe:columnGroup>
+                <pe:sheetcolumn readOnly="true" value="#{row.assetId}" colWidth="150" />
+		        <pe:sheetcolumn value="#{row.assetType}" colWidth="100" colType="dropdown" selectItems="#{AssetType.ALL_VALUES}" sortBy="#{row.assetType}" filterBy="#{row.assetType}" filterOptions="#{sheetOptionProducer.assetTypes}" />
+		        <pe:sheetcolumn value="#{row.platform}" colWidth="100" colType="autocomplete" selectItems="#{PlatformType.ALL_VALUES}" autoCompleteStrict="false" autoCompleteVisibleRows="4" sortBy="#{row.platform}" filterBy="#{row.platform}" filterOptions="#{sheetOptionProducer.platformTypes}" />
+		        <pe:sheetcolumn value="#{row.platformArch}" colWidth="100" />
+		         <pe:sheetcolumn value="#{row.active}" colWidth="100" readOnly="false" /> <!-- colType="checkbox" --> 
+		        <!-- <pe:sheetcolumn value="#{row.purchasePrice}" colWidth="100"  colType="numeric" numericLocale="de-DE" numericPattern="$0,0.00">
+					<f:converter converterId="javax.faces.BigDecimal" />
+		        </pe:sheetcolumn> -->
+		        <pe:sheetcolumn value="#{row.purchasePrice}" colWidth="100">
+					<!-- <f:converter converterId="javax.faces.BigDecimal" /> -->
+		        </pe:sheetcolumn>
+		        <pe:sheetcolumn value="#{row.password}" colWidth="100" styleClass="password"  passwordHashSymbol="*" passwordHashLength="8" /><!-- colType="password" -->
+		        <pe:sheetcolumn value="#{row.purchaseDate}" colWidth="110" sortBy="#{row.purchaseDate}" styleClass="htCenter" colType="date" dateFormat="YYYY-MM-DD">
+					<f:convertDateTime type="date" pattern="yyyy-MM-dd" />
+		        </pe:sheetcolumn>
+		        <pe:sheetcolumn value="#{row.purchaseTime}" colWidth="110" sortBy="#{row.purchaseTime}" styleClass="htCenter" colType="time" timeFormat="h:mm:ss a">
+					<f:convertDateTime type="time" pattern="h:mm:ss a" />
+		        </pe:sheetcolumn>
+            </pe:sheet>
+            
+            <!--  	<p:commandLink id="pdf" ajax="false">
+	 		<h:outputLabel value="pdf" />
+	 		<pe:exporter type="pdf" target="sheet" fileName="MessagesAndDetails" datasetPadding="4" />  
+  
+        </p:commandLink> -->
+        </h:form>
+		
+        <style type="text/css">
+body {
+	font-family: Roboto, Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	font-weight: 400;
+	color: #363636;
+}
+
+
+
+.positive {
+	color: Green;
+	background-color: WhiteSmoke !important
+}
+
+.negative {
+	color: Red;
+	background-color: white
+}
+
+.password {
+	color: DarkViolet
+}
+</style>
+<script type="text/javascript" src="nestload.js" />
+        <script>
+      //<![CDATA[
+      /* var $hot = PF('sheetWidget').ht; */
+      
+
+
+		//create a validation instance
+//////////////////////////////////////////////////////////////////////////////        
+
+//---------------------------------------------------------------
+
+        vldtlinearray=[
+            validate1={row:'', col:4, comment:'testing 111',color:'yellow',vldtfunc: function vldtfunc(){
+        	if(this.value == '111'){return true}
+        	else{return false}
+            	}}, 
+
+            validate2={row:'', col:3, comment:'testing 000',color:'red',vldtfunc: function vldtfunc(){
+           	if(this.value == '000'){return true}
+           	else{return false}
+               }}]
+        
+        vldtlinearray2=[
+            validate1={row:'', col:5, comment:'testing 333',color:'green',vldtfunc: function vldtfunc(){
+        	if(this.value == '333'){return true}
+        	else{return false}
+            	}}, 
+
+            validate2={row:'', col:6, comment:'testing 222',color:'blue',vldtfunc: function vldtfunc(){
+           	if(this.value == '222'){return true}
+           	else{return false}
+               }}]
+
+        
+////////////////////////////////////////////////////////////////////////////
+
+	nestload([new ValWithWidget(vldtlinearray, 'sheetWidget'), new ValWithWidget(vldtlinearray, 'sheetWidget2'), new ValWithWidget(vldtlinearray2, 'sheetWidget3')]);
+	
+      
+      //]]>
+	</script>
+    </h:body>
+</html>

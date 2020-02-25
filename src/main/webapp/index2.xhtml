@@ -1,0 +1,326 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:websams="http://xmlns.jcp.org/jsf/composite/handsonTable"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:pe="http://primefaces.org/ui/extensions" xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title></title>
+    </h:head>
+    <h:body>
+        <h:form id="mainForm">
+            <p:importEnum type="websams.component.handsontable.model.AssetType" var="AssetType" />
+            <p:importEnum type="websams.component.handsontable.model.PlatformType" var="PlatformType" />
+            <!-- <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{sheetController.assets}" var="row" height="400" rowKey="#{row.assetId}" resizableCols="true" resizableRows="true" filteredValue="#{sheetController.filteredAssets}" readOnly="false" rowStyleClass="#{row.purchasePrice gt 0 ? 'positive' : 'negative'}" selectionMode="multiple" multisortable="true">
+             -->
+             <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{sheetController.assets}" var="row" height="400" rowKey="#{row.assetId}" readOnly="false" >
+            
+                 <p:ajax event="change" listener="#{sheetController.cellChangeEvent}" />
+                 <f:facet name="header">
+                    <h:outputText value="Assets" />
+                </f:facet>
+                <f:facet name="footer">
+                    <h:outputText id="footer" value="#{sheetController.filteredAssets.size()} Records" />
+                </f:facet> 
+                <pe:columnGroup>
+                	<pe:sheetRow>
+                		<pe:sheetcolumn rowSpan="3" headerText="Unique Identifier" />
+		            	<pe:sheetcolumn colSpan="8" headerText="Specification" />     
+                	</pe:sheetRow>
+                	<pe:sheetRow>
+		                <pe:sheetcolumn headerText="" />
+                		<pe:sheetcolumn colSpan="2" headerText="Dropdown" />    
+                		<pe:sheetcolumn colSpan="6" headerText="Others" />    
+                	</pe:sheetRow>
+                	<pe:sheetRow>
+                		
+                		<pe:sheetcolumn headerText="" />
+		                <pe:sheetcolumn headerText="Type" filterBy="#{row.assetType}" />
+		                <pe:sheetcolumn headerText="Platform" />
+		                <pe:sheetcolumn headerText="Arch" />
+		                <pe:sheetcolumn headerText="Active"/>
+		                <pe:sheetcolumn headerText="Price" />
+		                <pe:sheetcolumn headerText="Password" />
+		                <pe:sheetcolumn headerText="Date" />
+		                <pe:sheetcolumn headerText="Time" />
+                	</pe:sheetRow>
+                </pe:columnGroup>
+                <pe:sheetcolumn readOnly="true" value="#{row.assetId}" colWidth="150" />
+		        <pe:sheetcolumn value="#{row.assetType}" colWidth="100" colType="dropdown" selectItems="#{AssetType.ALL_VALUES}" sortBy="#{row.assetType}" filterBy="#{row.assetType}" filterOptions="#{sheetOptionProducer.assetTypes}" />
+		        <pe:sheetcolumn value="#{row.platform}" colWidth="100" colType="autocomplete" selectItems="#{PlatformType.ALL_VALUES}" autoCompleteStrict="false" autoCompleteVisibleRows="4" sortBy="#{row.platform}" filterBy="#{row.platform}" filterOptions="#{sheetOptionProducer.platformTypes}" />
+		        <pe:sheetcolumn value="#{row.platformArch}" colWidth="100" />
+		         <pe:sheetcolumn value="#{row.active}" colWidth="100" readOnly="false" /> <!-- colType="checkbox" --> 
+		        <!-- <pe:sheetcolumn value="#{row.purchasePrice}" colWidth="100"  colType="numeric" numericLocale="de-DE" numericPattern="$0,0.00">
+					<f:converter converterId="javax.faces.BigDecimal" />
+		        </pe:sheetcolumn> -->
+		        <pe:sheetcolumn value="#{row.purchasePrice}" colWidth="100">
+					<!-- <f:converter converterId="javax.faces.BigDecimal" /> -->
+		        </pe:sheetcolumn>
+		        <pe:sheetcolumn value="#{row.password}" colWidth="100" styleClass="password"  passwordHashSymbol="*" passwordHashLength="8" /><!-- colType="password" -->
+		        <pe:sheetcolumn value="#{row.purchaseDate}" colWidth="110" sortBy="#{row.purchaseDate}" styleClass="htCenter" colType="date" dateFormat="YYYY-MM-DD">
+					<f:convertDateTime type="date" pattern="yyyy-MM-dd" />
+		        </pe:sheetcolumn>
+		        <pe:sheetcolumn value="#{row.purchaseTime}" colWidth="110" sortBy="#{row.purchaseTime}" styleClass="htCenter" colType="time" timeFormat="h:mm:ss a">
+					<f:convertDateTime type="time" pattern="h:mm:ss a" />
+		        </pe:sheetcolumn>
+            </pe:sheet>
+            <!--  	<p:commandLink id="pdf" ajax="false">
+	 		<h:outputLabel value="pdf" />
+	 		<pe:exporter type="pdf" target="sheet" fileName="MessagesAndDetails" datasetPadding="4" />  
+  
+        </p:commandLink> -->
+        </h:form>
+        <style type="text/css">
+body {
+	font-family: Roboto, Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	font-weight: 400;
+	color: #363636;
+}
+
+
+
+.positive {
+	color: Green;
+	background-color: WhiteSmoke !important
+}
+
+.negative {
+	color: Red;
+	background-color: white
+}
+
+.password {
+	color: DarkViolet
+}
+</style>
+        <script>
+      //<![CDATA[
+      /* var $hot = PF('sheetWidget').ht; */
+      vldtlines=[];
+        function Validation(row, col, value, comment, color) {
+            this.row = row;
+            this.col = col;
+            this.value = value;
+            this.comment = comment;
+            this.color = color;
+            this.vldtfunc = function vldtfunc(){};
+        }
+
+		//create a validation instance
+//////////////////////////////////////////////////////////////////////////////        
+        var validate1 = new Validation(7,6,'','testing 888','green');
+        validate1.vldtfunc = function(){
+        	if(this.value == '888'){return true}
+        	else{return false}
+            };
+        vldtlines.push(validate1);
+
+        var validate2 = new Validation('',5,'','testing 777','yellow');
+        validate2.vldtfunc = function(){
+        	if(this.value == '777'){return true}
+        	else{return false}
+            };
+        vldtlines.push(validate2);
+//////////////////////////////////////////////////////////////////////////////        
+        function setCommentContentByRowCol(row, col, value){
+            /* if(value == '999'){
+            	
+            	if (col == 5) {return "comment in column 5"}
+            	if (col == 6) {return "comment in column 6"}
+            }
+            else { */
+            	for (vldt of vldtlines) {
+                	// can only specify a row or a column or a cell
+            		  if( (row == vldt.row && vldt.col == '')
+                	   || (col == vldt.col && vldt.row == '')
+                	   || (row == vldt.row && col == vldt.col))
+                   		  {
+                   		    //assign value to validation object and do validations
+                   		    vldt.value = value;
+                   		   bolvldt = vldt.vldtfunc();
+                 		    if (vldt.vldtfunc()){
+									return vldt.comment;
+                     		    }
+                 		   else {return ""}
+                 		   //vldt.value='';
+                   		  }
+            		  
+            		}
+                
+                //return ""
+                
+            /*  }  */
+      }
+        
+        
+        
+      	function negativeValueRenderer(instance, td, row, col, prop, value, cellProperties) {
+    		Handsontable.renderers.TextRenderer.apply(this, arguments);
+    		/* if (value == 999) {
+        		
+    	        td.style.backgroundColor = 'red'; 
+
+    	    	        
+
+    	     } 
+    		else
+        		{td.style.backgroundColor = '';} */
+    		for (vldt of vldtlines) {
+            	// can only specify a row or a column or a cell
+        		  if( (row == vldt.row && vldt.col == '')
+            	   || (col == vldt.col && vldt.row == '')
+            	   || (row == vldt.row && col == vldt.col))
+               		  {
+               		    //assign value to validation object and do validations
+               		    vldt.value = value;
+               		   bolvldt = vldt.vldtfunc();
+             		    if (vldt.vldtfunc()){
+             		    	td.style.backgroundColor = vldt.color;
+                 		    }
+             		   else {return td.style.backgroundColor = '';}
+             		   //vldt.value='';
+               		  }
+        		  
+        		}
+    		
+    		}
+
+      	function confirmTradePriceRederer(instance, td, row, col, prop, value, cellProperties) {
+      	    Handsontable.renderers.TextRenderer.apply(this, arguments);
+      	  
+      	    
+      	}
+      
+      	function secondRowRenderer(instance, td, row, col, prop, value, cellProperties) {
+		    Handsontable.renderers.TextRenderer.apply(this, arguments);
+		    td.style.fontWeight = 'bold';
+		    td.style.color = 'green';
+		    td.style.background = '#CEC';
+		    td.style.verticalAlign = 'middle';
+		    td.style.textAlign = 'center';
+		    td.style.unselectable = 'on';
+		    
+		  }
+		  
+        $(document).ready(
+         function() {  
+    	var $hot = PF('sheetWidget').ht;  
+    	Handsontable.renderers.registerRenderer('negativeValueRenderer', negativeValueRenderer);
+    	
+    	 $hot.addHook(
+        		"afterChange", function (changes, source) {
+       				if (source == 'edit' || source == "CopyPaste.paste") { 
+       		        	if (changes != null){
+	       		     		for(x=0; x<changes.length; x++) {
+		       		    		var responseComments = setCommentContentByRowCol(changes[x][0], changes[x][1], changes[x][3]);
+		       		    	
+		       		    		 
+		       		    		
+		       		    		
+		       		    		//the follow method will force rendering whole table after it assign value to every comment
+		       		    		 this.getCellMeta(changes[x][0], changes[x][1]).comment = {'value':responseComments};
+		       		    		 
+		       		    		 //the follow method will force rendering whole table everytime it assign value to comment
+		       		    		 /* this.getPlugin('comments').setCommentAtCell(changes[x][0], changes[x][1], comment);  */
+		       		    	}
+       		      		}
+   		      			
+        		       } 
+ 		       
+       		         }
+  		         );  
+	         
+    	$hot.updateSettings({
+    		cells: function (row, col) {
+
+    			
+
+        		
+        		/////////////////////////////////
+    			/* console.log("in cell function") */
+    		      var cellProperties = {};
+    		      var data = this.instance.getData();
+    		  
+    		      if (row <= 2 || data[row] && data[row][col] === 'readOnly') {
+    		        cellProperties.readOnly = true; // make cell read-only if it is first row or the text reads 'readOnly'
+    		        
+    		      }
+    		      if (row <= 2) {
+    		          cellProperties.renderer = secondRowRenderer; // uses function directly
+    		       
+    		          if (row === 1) {
+    		          cellProperties.renderer = secondRowRenderer; // uses function directly
+    		          cellProperties.invalid = true;
+    		        }
+    		      }
+    		      
+    		      else {
+   		    	    var cellProperties = {};
+    		        cellProperties.renderer = "negativeValueRenderer"; // uses lookup map
+    		        return cellProperties;
+    		      }
+    		  
+    		      return cellProperties;
+    		    }, 
+
+   		     /* afterChange: function (changes, source) {
+   		        console.log(changes,source);
+   		        if (changes != null){
+   		          console.log("changed input to : " + changes[0][3])
+   		        if (changes[0][3] == "999"){
+   		          console.log("999 input")
+   		        this.getPlugin('comments').setCommentAtCell(changes[0][0], changes[0][1], 'Comment contents');
+   		        //  hot1.getCell(changes[0][0],changes[0][1]).style.color = 'red';
+   		        }
+   		      }
+   		         },  */
+
+         		   
+        	afterSelection: 
+        	function (row, col, row2, col2, preventScrolling, selectionLayerLevel) {
+        		
+
+			
+            	
+    		
+    			var borders = document.querySelectorAll('.handsontable .wtBorder'); 
+    			/*if (typeof  borders[0].style !== 'undefined') {  */
+    			 if (row < 3 && row2 < 3){
+    				 /* console.log("less than 2") */
+    		      for(x=0; x<15; x++){
+    		    	  /* console.log("in loop") */
+        		  borders[x].style.backgroundColor="";
+    		      borders[x].style.display="none"; 
+    		      borders[4].style.borderWidth="0px";
+   		    	  borders[4].style.borderRightStyle="";
+  		    	
+    		       }
+    	}
+    			
+    		        if (row >=3  && row2 >= 3){
+    		        	/* console.log("greater than 2") */
+    		        	 for(x=0; x<10; x++){
+    		        		 
+        		        	  borders[x].style.backgroundColor="rgb(75, 137, 255)";
+    		        		 
+        		        	  }
+    		    	   
+    		           borders[4].style.borderWidth="1px"/* 
+    		           borders[4].style.borderRightWidth="1px" */
+    		   		  
+    		          }  
+  		          
+        		/* } */     
+        	},
+
+
+    	 
+	
+     		});  
+    	
+    	});
+      //]]>
+	</script>
+    </h:body>
+</html>
