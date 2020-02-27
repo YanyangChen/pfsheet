@@ -56,7 +56,7 @@
             <p:importEnum type="websams.component.handsontable.model.PlatformType" var="PlatformType" /> -->
             <!-- <pe:sheet id="sheet" widgetVar="sheetWidget" value="#{sheetController.assets}" var="row" height="400" rowKey="#{row.assetId}" resizableCols="true" resizableRows="true" filteredValue="#{sheetController.filteredAssets}" readOnly="false" rowStyleClass="#{row.purchasePrice gt 0 ? 'positive' : 'negative'}" selectionMode="multiple" multisortable="true">
              -->
-             <pe:sheet id="sheet2" widgetVar="sheetWidget2" value="#{sheetController.subjectslist}" var="row" height="400" width="400" fixedCols="3" rowKey="#{row.chin}" readOnly="false" >
+             <pe:sheet id="sheet2" widgetVar="sheetWidget2" value="#{sheetController.subjectslist}" var="row" height="400" width="450" showRowHeaders="#{false}" fixedCols="3" rowKey="#{row.chin}" readOnly="false">
             
                  <p:ajax event="change" listener="#{sheetController.subjectsChangeEvent}" />
                  
