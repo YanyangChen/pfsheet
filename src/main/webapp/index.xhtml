@@ -92,7 +92,32 @@
         </p:commandLink> -->
         
         </h:form>
-        
+        <h:form>
+    <p:panel header="Validate">
+        <h:panelGrid columns="4" cellpadding="5">
+            <h:outputLabel for="text" value="Text: (Change)" />
+            <!--<p:inputText id="regex" value="#{validationView.regexText}" validatorMessage="Value does not match pattern test.">
+                <f:validateRegex pattern="^[a-zA-Z]+$" />
+                <p:clientValidator />
+            </p:inputText>
+            <p:message for="regex" />-->
+            <p:inputText id="text" value="#{validationView.text}" required="true" validatorMessage="Value does not match pattern test.">
+                <f:validateRegex pattern="^[a-zA-Z]+$" />
+                <p:clientValidator />
+            </p:inputText>
+            <p:message for="text"  />
+
+            <h:outputLabel for="integer" value="Integer: (Keyup)" />
+            <p:inputText id="integer" value="#{validationView.integer}" validatorMessage="must be integer">
+                <p:clientValidator event="keyup"/>
+            </p:inputText>
+            <p:message for="integer" display="icon" />
+            <h:outputText value="#{validationView.integer}" />
+        </h:panelGrid>
+
+        <p:commandButton value="Save" ajax="false" icon="pi pi-check" validateClient="true" />
+    </p:panel>
+</h:form>
         
         <h:form id="thirdForm">
             <!-- <p:importEnum type="websams.component.handsontable.model.AssetType" var="AssetType" />
